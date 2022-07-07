@@ -11,10 +11,13 @@ app.get("/language/:language", async (req, res) => {
 
     // Given a language, return a list of the common name of all countries using this endpoint
     let countryNames = ""
+    let populationCount = ""
     for (i = 0; i < languageCountries.length; i++) {
-      countryNames += languageCountries[i].name.common + ", "
+      countryNames += languageCountries[i].name.common + ", population: " + languageCountries[i].population + "<br>"
     }
     console.log("List of countries in this apiResponse: " + countryNames)
+
+    // Return name of country + population
 
     // Output in browser
     res.send(`Output: "${language[0].toUpperCase() + language.substring(1)}" 
