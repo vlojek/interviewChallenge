@@ -1,29 +1,25 @@
 const express = require("express")
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 const axios = require("axios")
 
 app.get("/language/:language", async (req, res) => {
   try {
     let language = req.params.language
     const response = await axios.get("https://restcountries.com/v3.1/lang/" + language)
-    languageCountries = response.data
+    let languageCountries = response.data
 
-    // given a language, return a list of the common name of all countries using this endpoint
-
-    let count = 0
+    // Given a language, return a list of the common name of all countries using this endpoint
     let countryNames = ""
     for (i = 0; i < languageCountries.length; i++) {
-      count += 1
-      countryNames += languageCountries[i].name.common + "<br>"
+      countryNames += languageCountries[i].name.common + ", "
     }
-    console.log(countryNames)
+    console.log("List of countries in this apiResponse: " + countryNames)
 
-    // find total population that speaks this language
-
-    // find smallest country which speaks this language
-
-    res.send(`Output: <br><br> ${countryNames}`)
+    // Output in browser
+    res.send(`Output: "${language[0].toUpperCase() + language.substring(1)}" 
+    is officially used in these countries: 
+    <br><br> ${countryNames}`)
   } catch (err) {
     console.error(err)
     res.send("Something went wrong.")
